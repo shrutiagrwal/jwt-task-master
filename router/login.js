@@ -8,9 +8,9 @@ const router = express.Router();
 router.post('/', async(req, res) => {
     let Email = req.body.Email
     let Password = req.body.Password
-    if (!Email)
+    if (!Email || Email.length === 0)
         return res.status(400).send({ 'error': "Email ID not provided", "data": null })
-    if (!Password)
+    if (!Password || Password.length === 0)
         return res.status(400).send({ 'error': "password not provided", "data": null })
     let user = await User.find({ Email });
     if (!user || user.length === 0)
@@ -23,7 +23,7 @@ router.post('/', async(req, res) => {
         let accesstoken = jwt.sign(payload, private)
         res.status(201).append('Authorization', `Bearer ${accesstoken}`).send({ 'error': null, 'data': user, 'jwt-token': `Bearer ${accesstoken}` })
     } catch (err) {
-        res.status(400).send('auth error')
+        res.status(400).send({ 'error': 'auth error', 'data': null })
     }
 })
 module.exports = router
