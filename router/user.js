@@ -2,7 +2,7 @@ const express = require('express');
 const { Error } = require('mongoose');
 const auth = require('../auth/userAuth');
 const router = express.Router();
-const User = require('../models/user')
+const { User, EmailValidation } = require('../models/user')
 require('dotenv').config()
     //get all users
 router.get('/all', async(req, res) => {
@@ -32,6 +32,9 @@ router.post('/create', async(req, res) => {
         let check = await User.find({ Email: user.Email });
         if (check.length !== 0)
             throw new Error('Email ID already exist');
+        if (!EmailValidation(user.Email))
+            throw new Error('Invalid Email')
+
         else {
             await user.save();
             return res.status(200).send({ 'error': "user created successfully", 'data': user });
