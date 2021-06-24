@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
 const mongoose = require('mongoose')
 const login = require('./router/login')
@@ -8,6 +7,7 @@ const MongoDB = require('./DB/mongoose')
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
+require('dotenv').config();
 
 //connect to DB
 MongoDB();

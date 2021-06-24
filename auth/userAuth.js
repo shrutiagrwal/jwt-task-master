@@ -4,12 +4,11 @@ let auth = async(req, res, next) => {
     try {
         const token = req.header('Authorization').split(" ")[1]
         let user = await jwt.verify(token, private)
-        if (!user) throw new Error
+        if (!user) throw new Error('invalid signature')
         req.user = user;
         next();
     } catch (err) {
-        console.log(err)
-        return res.status(401).send({ 'error': "not authenticated" })
+        return res.status(401).send({ 'error': err.message, 'data': null })
     }
 }
 module.exports = auth;

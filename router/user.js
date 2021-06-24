@@ -3,8 +3,8 @@ const { Error } = require('mongoose');
 const auth = require('../auth/userAuth');
 const router = express.Router();
 const User = require('../models/user')
-
-//get all users
+require('dotenv').config()
+    //get all users
 router.get('/all', async(req, res) => {
     let user = await User.find();
     return res.send({ 'error': 'null', 'data': user })
@@ -69,7 +69,6 @@ router.delete('/delete', auth, async(req, res) => {
         user = await User.deleteOne({ Email })
         return res.status(200).send({ error: null, data: user })
     } catch (err) {
-        console.log(err)
         return res.status(400).send({ error: err.message, data: null })
     }
 })
