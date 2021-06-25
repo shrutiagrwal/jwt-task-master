@@ -1,5 +1,11 @@
 it is a user management system that uses JWT for authentication
 
+to get started
+
+1-run npm install(to install packages)
+
+2-npm run start(starts server )
+
 #API to get all the users
 
 localhost:3000/api/user/all --> get method
